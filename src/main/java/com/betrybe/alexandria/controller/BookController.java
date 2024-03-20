@@ -1,9 +1,13 @@
 package com.betrybe.alexandria.controller;
 
-import com.betrybe.alexandria.entity.Author;
-import com.betrybe.alexandria.service.AuthorService;
-import com.betrybe.alexandria.service.exception.AuthorNotFoundException;
+import com.betrybe.alexandria.controller.dto.BookCreationDto;
+import com.betrybe.alexandria.controller.dto.BookDto;
+import com.betrybe.alexandria.entity.Book;
+import com.betrybe.alexandria.service.BookService;
+import com.betrybe.alexandria.service.exception.BookNotFoundException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,52 +18,93 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Book controller.
+ */
 @RestController
-@RequestMapping(value = "/authors")
-public class AuthorController {
+@RequestMapping(value = "/books")
+public class BookController {
 
-  private final AuthorService authorService;
+  private final BookService bookService;
 
+  /**
+   * Instantiates a new Book controller.
+   *
+   * @param bookService the book service
+   */
   @Autowired
-  public AuthorController(AuthorService authorService) {
-    this.authorService = authorService;
+  public BookController(BookService bookService) {
+    this.bookService = bookService;
   }
 
+  /**
+   * Gets book by id.
+   *
+   * @param id the id
+   * @return the book by id
+   * @throws BookNotFoundException the book not found exception
+   */
   @GetMapping("/{id}")
-  public AuthorDto getAuthorById(@PathVariable Long id) throws AuthorNotFoundException {
-    return AuthorDto.fromEntity(
-        authorService.findById(id)
+  public BookDto getBookById(@PathVariable Long id) throws BookNotFoundException {
+    return BookDto.fromEntity(
+        bookService.findById(id)
     );
   }
 
+  /**
+   * Gets all books.
+   *
+   * @return the all books
+   */
   @GetMapping
-  public List<AuthorDto> getAllAuthors() {
-    List<Author> allAuthors = authorService.findAll();
-    return allAuthors.stream()
-        .map(AuthorDto::fromEntity)
+  public List<BookDto> getAllBooks() {
+    List<Book> allBooks = bookService.findAll();
+    return allBooks.stream()
+        .map(BookDto::fromEntity)
         .toList();
   }
 
+  /**
+   * Create book book dto.
+   *
+   * @param bookCreationDto the book creation dto
+   * @return the book dto
+   */
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public AuthorDto createAuthor(@RequestBody AuthorCreationDto authorCreationDto) {
-    return AuthorDto.fromEntity(
-        authorService.create(authorCreationDto.toEntity())
+  public BookDto createBook(@RequestBody BookCreationDto bookCreationDto) {
+    return BookDto.fromEntity(
+        bookService.create(bookCreationDto.toEntity())
     );
   }
 
+  /**
+   * Update book book dto.
+   *
+   * @param id              the id
+   * @param bookCreationDto the book creation dto
+   * @return the book dto
+   * @throws BookNotFoundException the book not found exception
+   */
   @PutMapping("/{id}")
-  public AuthorDto updateAuthor(@PathVariable Long id,
-      @RequestBody AuthorCreationDto authorCreationDto) throws AuthorNotFoundException {
-    return AuthorDto.fromEntity(
-        authorService.update(id, authorCreationDto.toEntity())
+  public BookDto updateBook(@PathVariable Long id,
+      @RequestBody BookCreationDto bookCreationDto) throws BookNotFoundException {
+    return BookDto.fromEntity(
+        bookService.update(id, bookCreationDto.toEntity())
     );
   }
 
+  /**
+   * Delete book by id book dto.
+   *
+   * @param id the id
+   * @return the book dto
+   * @throws BookNotFoundException the book not found exception
+   */
   @DeleteMapping("/{id}")
-  public AuthorDto deleteAuthorById(@PathVariable Long id) throws AuthorNotFoundException {
-    return AuthorDto.fromEntity(
-        authorService.deleteById(id)
+  public BookDto deleteBookById(@PathVariable Long id) throws BookNotFoundException {
+    return BookDto.fromEntity(
+        bookService.deleteById(id)
     );
   }
 }
