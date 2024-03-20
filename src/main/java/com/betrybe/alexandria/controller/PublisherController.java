@@ -65,7 +65,7 @@ public class PublisherController {
   }
 
   /**
-   * Create publisher publisher dto.
+   * Create publisher.
    *
    * @param publisherCreationDto the publisher creation dto
    * @return the publisher dto
@@ -79,7 +79,7 @@ public class PublisherController {
   }
 
   /**
-   * Update publisher publisher dto.
+   * Update publisher.
    *
    * @param id                   the id
    * @param publisherCreationDto the publisher creation dto

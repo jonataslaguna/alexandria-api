@@ -65,7 +65,7 @@ public class BookController {
   }
 
   /**
-   * Create book book dto.
+   * Create book.
    *
    * @param bookCreationDto the book creation dto
    * @return the book dto
@@ -79,7 +79,7 @@ public class BookController {
   }
 
   /**
-   * Update book book dto.
+   * Update book.
    *
    * @param id              the id
    * @param bookCreationDto the book creation dto

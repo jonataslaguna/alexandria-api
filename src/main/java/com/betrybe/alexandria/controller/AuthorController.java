@@ -65,7 +65,7 @@ public class AuthorController {
   }
 
   /**
-   * Create author author dto.
+   * Create author.
    *
    * @param authorCreationDto the author creation dto
    * @return the author dto
@@ -79,7 +79,7 @@ public class AuthorController {
   }
 
   /**
-   * Update author author dto.
+   * Update author.
    *
    * @param id                the id
    * @param authorCreationDto the author creation dto
