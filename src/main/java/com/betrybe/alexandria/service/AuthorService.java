@@ -81,7 +81,6 @@ public class AuthorService {
    * @throws AuthorNotFoundException the author not found exception
    */
   public Author deleteById(Long id) throws AuthorNotFoundException {
-    // Pegamos a entidade antes de apagar, para poder retorná-la
     Author author = findById(id);
 
     authorRepository.deleteById(id);

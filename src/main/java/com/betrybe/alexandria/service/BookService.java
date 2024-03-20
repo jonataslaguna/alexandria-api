@@ -81,7 +81,6 @@ public class BookService {
    * @throws BookNotFoundException the book not found exception
    */
   public Book deleteById(Long id) throws BookNotFoundException {
-    // Pegamos a entidade antes de apagar, para poder retorná-la
     Book book = findById(id);
 
     bookRepository.deleteById(id);
