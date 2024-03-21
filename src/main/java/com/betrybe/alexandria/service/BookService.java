@@ -2,6 +2,7 @@ package com.betrybe.alexandria.service;
 
 import com.betrybe.alexandria.entity.Book;
 import com.betrybe.alexandria.entity.BookDetail;
+import com.betrybe.alexandria.entity.Publisher;
 import com.betrybe.alexandria.repository.BookDetailRepository;
 import com.betrybe.alexandria.repository.BookRepository;
 import com.betrybe.alexandria.service.exception.BookDetailNotFoundException;
@@ -19,16 +20,21 @@ public class BookService {
   private final BookRepository bookRepository;
   private final BookDetailRepository bookDetailRepository;
 
+  private final PublisherService publisherService;
+
   /**
    * Instantiates a new Book service.
    *
    * @param bookRepository       the book repository
    * @param bookDetailRepository the book detail repository
+   * @param publisherService     the publisher service
    */
   @Autowired
-  public BookService(BookRepository bookRepository, BookDetailRepository bookDetailRepository) {
+  public BookService(BookRepository bookRepository, BookDetailRepository bookDetailRepository,
+      PublisherService publisherService) {
     this.bookRepository = bookRepository;
     this.bookDetailRepository = bookDetailRepository;
+    this.publisherService = publisherService;
   }
 
   /**
@@ -175,5 +181,39 @@ public class BookService {
     bookDetailRepository.delete(bookDetail);
 
     return bookDetail;
+  }
+
+  /**
+   * Sets book publisher.
+   *
+   * @param bookId      the book id
+   * @param publisherId the publisher id
+   * @return the book publisher
+   * @throws BookNotFoundException      the book not found exception
+   * @throws PublisherNotFoundException the publisher not found exception
+   */
+  public Book setBookPublisher(Long bookId, Long publisherId)
+      throws BookNotFoundException, PublisherNotFoundException {
+    Book book = findById(bookId);
+    Publisher publisher = publisherService.findById(publisherId);
+
+    book.setPublisher(publisher);
+
+    return bookRepository.save(book);
+  }
+
+  /**
+   * Remove book publisher book.
+   *
+   * @param bookId the book id
+   * @return the book
+   * @throws BookNotFoundException the book not found exception
+   */
+  public Book removeBookPublisher(Long bookId) throws BookNotFoundException {
+    Book book = findById(bookId);
+
+    book.setPublisher(null);
+
+    return bookRepository.save(book);
   }
 }
